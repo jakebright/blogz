@@ -21,8 +21,16 @@ class Blog(db.Model):
         self.title = title
         self.body = body
 
+# create route
+#render template
+#link to route and id
+#return
 
+@app.route('/post/<int:post_id>/')
+def post(post_id):
+    post = Blog.query.filter_by(id=post_id).one()
 
+    return render_template('post.html', post=post)
 
 @app.route('/blog', methods=['POST', 'GET'])
 def display_all_posts():
@@ -51,13 +59,13 @@ def display_all_posts():
         if has_errors == True:
 
             return render_template('newpost.html', title_error=title_error, 
-                body_error=body_error, form=request.form)
+                body_error=body_error)      #, form=request.form
 
         blog = Blog(request.form['title'], request.form['body'])
         db.session.add(blog)
         db.session.commit()
 
-        return redirect('/blog')
+        return redirect('/post/%s/' % blog.id )
 
     if request.method == 'GET':
         blogs = Blog.query.all()

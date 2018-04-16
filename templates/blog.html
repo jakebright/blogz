@@ -14,7 +14,7 @@
 
         
             {% for blog in blogs %}
-            <li><h1> <a href='./blog?id={{blog.id}}'>{{blog.title}} </a></h1> </li>
+            <li><h1> <a href='./post/{{blog.id}}'>{{blog.title}} </a></h1></li>
             <li><h3> {{blog.body}} </h3></li>
 
             <hr />
@@ -23,4 +23,4 @@
         
 
     {% endif %}
-{% endblock %}
+{% endblock %} 
