@@ -8,7 +8,7 @@
         <label>
             Blog Title:
         </br>
-            <input id='title' type='text' name='title' />
+            <input id='title' type='text' name='title' value='{{title}}' />
             <span class='error'>{{title_error}}</span>
         </label> 
 </br>
@@ -18,7 +18,7 @@
     <label>
         New Blog Post:
     </br>
-        <textarea rows='4' cols='50' id='body' type='text' name='body'></textarea>
+        <textarea rows='4' cols='50' id='body' type='text' name='body'>{{body}}</textarea>
         <span class='error'>{{body_error}}</span>
     </br>   
         <input type='submit' value='Add Blog Entry' />

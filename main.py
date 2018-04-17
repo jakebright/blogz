@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://build-a-blog:launchcode@localhost:8889/build-a-blog'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://blogz:Launchcode@localhost:8889/blogz'
 app.config['SQLALCHEMY_ECHO'] = True
 
 db = SQLAlchemy(app)
@@ -16,15 +16,32 @@ class Blog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(120))
     body = db.Column(db.Text)
-
+    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    
     def __init__(self, title, body):
         self.title = title
         self.body = body
+        self.owner = owner
 
-# create route
-#render template
-#link to route and id
-#return
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(25), unique=True)
+    password = db.Column(db.String(25))
+    blogs = db.relationship('Blog', backref='owner')
+
+    def __init__(self, email, passowrd):
+        self.email = email
+        self.password = password
+
+@app.route('/login', methods=['POST' , 'GET'])
+def login():
+
+    return render_template('login.html')
+
+@app.route('/signup', methods=['POST' , 'GET'])
+def signup():    
+    
+    return render_template('signup.html')
 
 @app.route('/post/<int:post_id>/')
 def post(post_id):
@@ -59,7 +76,7 @@ def display_all_posts():
         if has_errors == True:
 
             return render_template('newpost.html', title_error=title_error, 
-                body_error=body_error)      #, form=request.form
+                body_error=body_error, form=request.form, title=title, body=body)      #, form=request.form
 
         blog = Blog(request.form['title'], request.form['body'])
         db.session.add(blog)
@@ -85,4 +102,3 @@ def index():
 
 if __name__ == '__main__':
     app.run()
-
