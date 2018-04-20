@@ -14,17 +14,12 @@
 
         
             {% for blog in blogs %}
-            <li><h1> <a href='./post/{{blog.id}}'>{{blog.title}} </a></h1></li>
+            <li><h1> {{blog.title}} </a></h1></li>
             <li><h3> {{blog.body}} </h3></li>
-            <subtitle> Written by:
-                <a href='/blog?id={{blog.user.username}}'> {{ blog.user.username }}
-                </a>
-            </subtitle>
-            
+
             <hr />
 
             {% endfor %}
-
         
 
     {% endif %}

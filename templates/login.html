@@ -1,16 +1,19 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Blogz Login Page</h1>
-<p>If you don't have an account, you may <a href="/register">register</a> for one</p>
+<center>
+    
+<h1>Log in to Blogz!</h1>
+<p>If you don't have an account, you may <a href="/signup">Create Account</a> for one</p>
 <form action="/login" method="post">
     <table>
         <tr>
-            <td><label for="email">Email</label></td>
+            <td><label for="username">Username</label></td>
             <td>
-                <input name="email" type="email" value="{{ email }}">
+                <input name="username" type="username" value="{{ username }}">
             </td>
         </tr>
+        <br>
         <tr>
             <td><label for="password">Password</label></td>
             <td>
@@ -20,4 +23,5 @@
     </table>
     <input type="submit" value="Login">
 </form>
+</center>
 {% endblock %}
