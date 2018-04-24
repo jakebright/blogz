@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, render_template, session, flash, url_for
+from flask import Flask, request, redirect, render_template, session, flash
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -35,7 +35,7 @@ class User(db.Model):
 
 @app.before_request
 def require_login():
-    allowed_routes = ['login', 'signup', 'home']
+    allowed_routes = ['login', 'signup', 'home', 'display_all_posts']
     if request.endpoint not in allowed_routes and 'username' not in session:
         return redirect('/login')
 
@@ -155,8 +155,10 @@ def post(post_id):
 def display_all_posts():
     #import pdb; pdb.set_trace()
     has_errors = False
-    owner = User.query.filter_by(username=session['username']).first()
+
     users = User.query.filter_by().all()
+
+        
 
     if request.method == 'POST':
         title = request.form['title']
@@ -181,7 +183,9 @@ def display_all_posts():
 
             return render_template('newpost.html', title_error=title_error, 
                 body_error=body_error, form=request.form, title=title, body=body)      #, form=request.form
-
+       
+        owner = User.query.filter_by(username=session['username']).first()
+        
         blog_title = request.form['title']
         blog_body =  request.form['body']
         new_blog = Blog(title, body, owner)
@@ -194,6 +198,7 @@ def display_all_posts():
     if request.method == 'GET':
         user = request.args.get('id', None)
         _user = User.query.filter_by(username=user).first()
+    
 
         if _user is None:
             blogs = Blog.query.filter_by().all()
